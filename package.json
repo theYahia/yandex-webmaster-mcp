@@ -1,0 +1,46 @@
+{
+  "name": "@theyahia/yandex-webmaster-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Yandex.Webmaster API — hosts, search queries, indexing status. Bearer token auth.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "yandex-webmaster-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "mcp", "mcp-server", "model-context-protocol", "modelcontextprotocol",
+    "claude", "ai", "llm", "anthropic", "cursor", "ai-tools", "ai-agent",
+    "russian-api", "yandex", "webmaster", "seo", "indexing", "search"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theYahia/yandex-webmaster-mcp.git"
+  },
+  "homepage": "https://github.com/theYahia/yandex-webmaster-mcp#readme",
+  "author": "theYahia (https://github.com/theYahia)"
+}
