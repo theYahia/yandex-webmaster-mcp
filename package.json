@@ -56,5 +56,6 @@
     "url": "https://github.com/theYahia/yandex-webmaster-mcp.git"
   },
   "homepage": "https://github.com/theYahia/yandex-webmaster-mcp#readme",
-  "author": "theYahia (https://github.com/theYahia)"
+  "author": "theYahia (https://github.com/theYahia)",
+  "mcpName": "io.github.theYahia/yandex-webmaster-mcp"
 }
