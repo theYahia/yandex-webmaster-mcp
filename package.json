@@ -1,6 +1,6 @@
 {
   "name": "@theyahia/yandex-webmaster-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for Yandex.Webmaster API — hosts, search queries, indexing status. Bearer token auth.",
   "type": "module",
   "main": "dist/index.js",
@@ -32,9 +32,23 @@
     "access": "public"
   },
   "keywords": [
-    "mcp", "mcp-server", "model-context-protocol", "modelcontextprotocol",
-    "claude", "ai", "llm", "anthropic", "cursor", "ai-tools", "ai-agent",
-    "russian-api", "yandex", "webmaster", "seo", "indexing", "search"
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "modelcontextprotocol",
+    "claude",
+    "ai",
+    "llm",
+    "anthropic",
+    "cursor",
+    "ai-tools",
+    "ai-agent",
+    "russian-api",
+    "yandex",
+    "webmaster",
+    "seo",
+    "indexing",
+    "search"
   ],
   "license": "MIT",
   "repository": {
