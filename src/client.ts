@@ -5,9 +5,17 @@ const MAX_RETRIES = 3;
 function getToken(): string {
   const token = process.env.YANDEX_WEBMASTER_TOKEN;
   if (!token) {
-    throw new Error("Переменная окружения YANDEX_WEBMASTER_TOKEN не задана");
+    throw new Error("YANDEX_WEBMASTER_TOKEN is not set");
   }
   return token;
+}
+
+export function getUserId(): string {
+  const userId = process.env.YANDEX_WEBMASTER_USER_ID;
+  if (!userId) {
+    throw new Error("YANDEX_WEBMASTER_USER_ID is not set");
+  }
+  return userId;
 }
 
 async function fetchWithRetry(url: string, options: RequestInit = {}, retries = MAX_RETRIES): Promise<Response> {
@@ -23,7 +31,7 @@ async function fetchWithRetry(url: string, options: RequestInit = {}, retries = 
 
       if (response.status >= 500 && attempt < retries) {
         const delay = Math.min(1000 * 2 ** (attempt - 1), 8000);
-        console.error(`[yandex-webmaster-mcp] ${response.status} от ${url}, повтор через ${delay}мс (${attempt}/${retries})`);
+        console.error(`[yandex-webmaster-mcp] ${response.status} from ${url}, retry in ${delay}ms (${attempt}/${retries})`);
         await new Promise(r => setTimeout(r, delay));
         continue;
       }
@@ -34,17 +42,19 @@ async function fetchWithRetry(url: string, options: RequestInit = {}, retries = 
       clearTimeout(timer);
       if (attempt === retries) throw error;
       if (error instanceof DOMException && error.name === "AbortError") {
-        console.error(`[yandex-webmaster-mcp] Таймаут ${url}, повтор (${attempt}/${retries})`);
+        console.error(`[yandex-webmaster-mcp] Timeout ${url}, retry (${attempt}/${retries})`);
         continue;
       }
       throw error;
     }
   }
-  throw new Error("Все попытки исчерпаны");
+  throw new Error("All retries exhausted");
 }
 
 export async function apiGet(path: string, params: Record<string, string> = {}): Promise<unknown> {
-  const url = new URL(path, BASE_URL);
+  const userId = getUserId();
+  const fullPath = path.startsWith("/user/") ? path : `/user/${userId}${path}`;
+  const url = new URL(fullPath, BASE_URL);
   for (const [k, v] of Object.entries(params)) {
     if (v) url.searchParams.set(k, v);
   }
@@ -57,7 +67,17 @@ export async function apiGet(path: string, params: Record<string, string> = {}):
   return response.json();
 }
 
-export async function getUserId(): Promise<string> {
-  const data = await apiGet("/user/") as { user_id: string };
-  return data.user_id;
+export async function apiPost(path: string, body: unknown): Promise<unknown> {
+  const userId = getUserId();
+  const fullPath = path.startsWith("/user/") ? path : `/user/${userId}${path}`;
+  const url = new URL(fullPath, BASE_URL);
+  const response = await fetchWithRetry(url.toString(), {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  return response.json();
 }

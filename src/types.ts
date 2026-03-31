@@ -22,3 +22,17 @@ export interface WebmasterIndexingResponse {
   excluded_count: number;
   site_error_count: number;
 }
+
+export interface WebmasterSitemap {
+  sitemap_url: string;
+  sitemap_type: string;
+  added_date: string;
+  last_access_date?: string;
+  urls_count?: number;
+  indexed_count?: number;
+  errors_count?: number;
+}
+
+export interface WebmasterSitemapsResponse {
+  sitemaps: WebmasterSitemap[];
+}
