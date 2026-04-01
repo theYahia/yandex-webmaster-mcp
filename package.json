@@ -1,7 +1,7 @@
 {
   "name": "@theyahia/yandex-webmaster-mcp",
   "version": "1.1.0",
-  "description": "MCP server for Yandex.Webmaster API — hosts, search queries, indexing, sitemaps, diagnostics, URL submission. Bearer token auth.",
+  "description": "MCP server for Yandex Webmaster — SEO, indexing, search queries (Russia)",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -54,7 +54,11 @@
     "indexing",
     "search",
     "sitemaps",
-    "diagnostics"
+    "diagnostics",
+    "yandex-webmaster",
+    "api",
+    "typescript",
+    "marketing"
   ],
   "license": "MIT",
   "repository": {
