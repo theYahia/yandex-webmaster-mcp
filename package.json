@@ -1,7 +1,7 @@
 {
   "name": "@theyahia/yandex-webmaster-mcp",
-  "version": "1.1.1",
-  "description": "MCP server for Yandex Webmaster — SEO, indexing, search queries (Russia)",
+  "version": "1.1.0",
+  "description": "MCP server for Yandex.Webmaster API — hosts, search queries, indexing, sitemaps, diagnostics, URL submission. Bearer token auth.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -17,6 +17,9 @@
     "build": "tsc",
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
+    "start:http": "node dist/index.js --http",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
@@ -26,7 +29,8 @@
   "devDependencies": {
     "@types/node": "^22.0.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
   },
   "publishConfig": {
     "access": "public"
@@ -49,10 +53,8 @@
     "seo",
     "indexing",
     "search",
-    "yandex-webmaster",
-    "api",
-    "typescript",
-    "marketing"
+    "sitemaps",
+    "diagnostics"
   ],
   "license": "MIT",
   "repository": {
@@ -60,5 +62,6 @@
     "url": "https://github.com/theYahia/yandex-webmaster-mcp.git"
   },
   "homepage": "https://github.com/theYahia/yandex-webmaster-mcp#readme",
-  "author": "theYahia (https://github.com/theYahia)"
+  "author": "theYahia (https://github.com/theYahia)",
+  "mcpName": "io.github.theYahia/yandex-webmaster-mcp"
 }
