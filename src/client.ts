@@ -54,13 +54,15 @@ async function fetchWithRetry(url: string, options: RequestInit = {}, retries = 
 export async function apiGet(path: string, params: Record<string, string> = {}): Promise<unknown> {
   const userId = getUserId();
   const fullPath = path.startsWith("/user/") ? path : `/user/${userId}${path}`;
-  const url = new URL(fullPath, BASE_URL);
+  // NOTE: do not use `new URL(fullPath, BASE_URL)` — when fullPath starts with "/",
+  // the WHATWG URL spec drops BASE_URL's path (`/v4`) entirely. Concat instead.
+  const url = new URL(BASE_URL + fullPath);
   for (const [k, v] of Object.entries(params)) {
     if (v) url.searchParams.set(k, v);
   }
   const response = await fetchWithRetry(url.toString(), {
     headers: {
-      Authorization: `Bearer ${getToken()}`,
+      Authorization: `OAuth ${getToken()}`,
       "Content-Type": "application/json",
     },
   });
@@ -70,11 +72,11 @@ export async function apiGet(path: string, params: Record<string, string> = {}):
 export async function apiPost(path: string, body: unknown): Promise<unknown> {
   const userId = getUserId();
   const fullPath = path.startsWith("/user/") ? path : `/user/${userId}${path}`;
-  const url = new URL(fullPath, BASE_URL);
+  const url = new URL(BASE_URL + fullPath);
   const response = await fetchWithRetry(url.toString(), {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${getToken()}`,
+      Authorization: `OAuth ${getToken()}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),

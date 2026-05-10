@@ -40,12 +40,13 @@ describe("client", () => {
 
     expect(fetchSpy).toHaveBeenCalledTimes(1);
     const calledUrl = fetchSpy.mock.calls[0][0] as string;
-    expect(calledUrl).toContain("/user/12345/hosts/");
-    expect(calledUrl).toContain("api.webmaster.yandex.net");
+    // Full path must include the /v4/ API version prefix — regression guard for
+    // the `new URL(absPath, base)` pitfall that silently dropped /v4.
+    expect(calledUrl).toContain("api.webmaster.yandex.net/v4/user/12345/hosts/");
     expect(result).toEqual({ hosts: [] });
   });
 
-  it("apiGet passes Bearer token header", async () => {
+  it("apiGet passes OAuth token header (Yandex auth scheme)", async () => {
     const mockResponse = { ok: true, json: () => Promise.resolve({}) };
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(mockResponse as any);
 
@@ -54,7 +55,7 @@ describe("client", () => {
 
     const calledOptions = fetchSpy.mock.calls[0][1] as RequestInit;
     expect(calledOptions.headers).toEqual(
-      expect.objectContaining({ Authorization: "Bearer test-token-123" }),
+      expect.objectContaining({ Authorization: "OAuth test-token-123" }),
     );
   });
 
