@@ -64,8 +64,8 @@ describe("tool handlers", () => {
     expect(parsed.problems).toEqual([]);
   });
 
-  it("handleGetSearchQueries passes date range", async () => {
-    vi.spyOn(globalThis, "fetch").mockResolvedValue({
+  it("handleGetSearchQueries calls /popular with per-query indicators", async () => {
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue({
       ok: true,
       json: () => Promise.resolve({ queries: [] }),
     } as any);
@@ -78,5 +78,36 @@ describe("tool handlers", () => {
     });
     const parsed = JSON.parse(result);
     expect(parsed).toHaveProperty("queries");
+
+    // Regression guards — the prior version hit /all/history which returns
+    // only an aggregate time-series, useless for per-query analytics.
+    const calledUrl = fetchSpy.mock.calls[0][0] as string;
+    expect(calledUrl).toContain("/search-queries/popular");
+    expect(calledUrl).not.toContain("/all/history");
+    expect(calledUrl).toContain("query_indicator=TOTAL_SHOWS");
+    expect(calledUrl).toContain("query_indicator=TOTAL_CLICKS");
+    expect(calledUrl).toContain("query_indicator=AVG_SHOW_POSITION");
+    expect(calledUrl).toContain("order_by=TOTAL_SHOWS");
+    expect(calledUrl).toContain("limit=100");
+  });
+
+  it("handleGetSearchQueries respects custom limit and order_by", async () => {
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({ queries: [] }),
+    } as any);
+
+    const { handleGetSearchQueries } = await import("../src/tools/search-queries.js");
+    await handleGetSearchQueries({
+      host_id: "abc",
+      date_from: "2024-01-01",
+      date_to: "2024-01-07",
+      limit: 500,
+      order_by: "TOTAL_CLICKS",
+    });
+
+    const calledUrl = fetchSpy.mock.calls[0][0] as string;
+    expect(calledUrl).toContain("limit=500");
+    expect(calledUrl).toContain("order_by=TOTAL_CLICKS");
   });
 });

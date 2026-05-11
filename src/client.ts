@@ -51,14 +51,26 @@ async function fetchWithRetry(url: string, options: RequestInit = {}, retries = 
   throw new Error("All retries exhausted");
 }
 
-export async function apiGet(path: string, params: Record<string, string> = {}): Promise<unknown> {
+export async function apiGet(
+  path: string,
+  params: Record<string, string | string[]> = {},
+): Promise<unknown> {
   const userId = getUserId();
   const fullPath = path.startsWith("/user/") ? path : `/user/${userId}${path}`;
   // NOTE: do not use `new URL(fullPath, BASE_URL)` — when fullPath starts with "/",
   // the WHATWG URL spec drops BASE_URL's path (`/v4`) entirely. Concat instead.
   const url = new URL(BASE_URL + fullPath);
   for (const [k, v] of Object.entries(params)) {
-    if (v) url.searchParams.set(k, v);
+    if (Array.isArray(v)) {
+      // Yandex APIs (e.g. search-queries/popular) accept some params repeated:
+      //   ?query_indicator=TOTAL_CLICKS&query_indicator=TOTAL_SHOWS
+      // Comma-joining does not work — values must be appended separately.
+      for (const item of v) {
+        if (item) url.searchParams.append(k, item);
+      }
+    } else if (v) {
+      url.searchParams.set(k, v);
+    }
   }
   const response = await fetchWithRetry(url.toString(), {
     headers: {
