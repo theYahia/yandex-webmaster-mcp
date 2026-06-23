@@ -1,11 +1,16 @@
 import { z } from "zod";
 import { apiGet } from "../client.js";
+import { formatParam, hostIdParam } from "./common.js";
+import { present } from "../format.js";
 
 export const getDiagnosticsSchema = z.object({
-  host_id: z.string().describe("Host ID from get_hosts"),
+  host_id: hostIdParam,
+  format: formatParam,
 });
 
-export async function handleGetDiagnostics(params: z.infer<typeof getDiagnosticsSchema>): Promise<string> {
+export async function handleGetDiagnostics(
+  params: z.infer<typeof getDiagnosticsSchema>,
+): Promise<string> {
   const data = await apiGet(`/hosts/${params.host_id}/diagnostics/`);
-  return JSON.stringify(data, null, 2);
+  return present(data, params.format);
 }

@@ -1,6 +1,6 @@
 {
   "name": "@theyahia/yandex-webmaster-mcp",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "MCP server for Yandex Webmaster — SEO, indexing, search queries (Russia)",
   "type": "module",
   "main": "dist/index.js",
@@ -14,10 +14,16 @@
     "node": ">=18.0.0"
   },
   "scripts": {
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "prebuild": "npm run clean",
     "build": "tsc",
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
     "start:http": "node dist/index.js --http",
+    "typecheck": "tsc --noEmit -p tsconfig.test.json",
+    "lint": "eslint src tests",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
     "prepublishOnly": "npm run build"
@@ -28,8 +34,12 @@
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.0.0",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",
+    "typescript-eslint": "^8.0.0",
     "vitest": "^3.0.0"
   },
   "publishConfig": {

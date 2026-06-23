@@ -2,10 +2,7 @@
   "mcpServers": {
     "yandex-webmaster": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@theyahia/yandex-webmaster-mcp"
-      ],
+      "args": ["-y", "@theyahia/yandex-webmaster-mcp"],
       "env": {
         "YANDEX_WEBMASTER_TOKEN": "YOUR_TOKEN"
       }

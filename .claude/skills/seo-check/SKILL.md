@@ -9,7 +9,7 @@ allowed-tools:
 
 # /seo-check
 
-1. Call get_hosts to find the site
-2. Call get_search_queries for top queries
-3. Call get_indexing for indexing status
-4. Format summary with positions, impressions, clicks, indexed pages
+1. Call get_hosts to find the site and its host_id
+2. Call get_popular_search_queries (host_id; date range defaults to the last 7 days)
+3. Call get_indexing for indexing status, and get_indexing_history to spot deindexing
+4. Format a summary: top queries with positions/shows/clicks, indexed pages, any trend

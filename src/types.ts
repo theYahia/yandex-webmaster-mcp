@@ -1,38 +1,36 @@
+/**
+ * Partial shapes for the Yandex Webmaster API v4 responses we render directly.
+ * Fields are intentionally optional/loose — the API omits empty values, and
+ * formatters degrade gracefully (falling back to raw JSON) on unexpected shapes.
+ * Endpoints whose shape we don't model go through the generic renderer.
+ */
+
 export interface WebmasterHost {
   host_id: string;
-  ascii_host_url: string;
-  unicode_host_url: string;
-  verified: boolean;
+  ascii_host_url?: string;
+  unicode_host_url?: string;
+  verified?: boolean;
+  main_mirror?: unknown;
 }
 
 export interface WebmasterHostsResponse {
   hosts: WebmasterHost[];
 }
 
-export interface WebmasterSearchQuery {
-  query: string;
-  clicks: number;
-  impressions: number;
-  ctr: number;
-  position: number;
+/** Per-query indicators, e.g. TOTAL_SHOWS, TOTAL_CLICKS, AVG_SHOW_POSITION. */
+export type QueryIndicators = Record<string, number>;
+
+export interface PopularQuery {
+  query_id: string;
+  query_text: string;
+  indicators: QueryIndicators;
 }
 
-export interface WebmasterIndexingResponse {
-  searchable_count: number;
-  excluded_count: number;
-  site_error_count: number;
+export interface PopularQueriesResponse {
+  queries: PopularQuery[];
+  count?: number;
 }
 
-export interface WebmasterSitemap {
-  sitemap_url: string;
-  sitemap_type: string;
-  added_date: string;
-  last_access_date?: string;
-  urls_count?: number;
-  indexed_count?: number;
-  errors_count?: number;
-}
-
-export interface WebmasterSitemapsResponse {
-  sitemaps: WebmasterSitemap[];
+export interface UserResponse {
+  user_id: number | string;
 }
