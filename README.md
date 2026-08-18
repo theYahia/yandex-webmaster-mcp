@@ -3,7 +3,7 @@
 > под SEO и валидацию спроса, плюс материалы официальных серверов Яндекса.
 > Здесь он живёт отдельно, там — рядом с остальными: [`mcp/yandex-webmaster-mcp/`](https://github.com/theYahia/YaAll/tree/main/mcp/yandex-webmaster-mcp)
 >
-> *Part of [theYahia/YaAll](https://github.com/theYahia/YaAll) — the whole Yandex stack in one repo.*
+> _Part of [theYahia/YaAll](https://github.com/theYahia/YaAll) — the whole Yandex stack in one repo._
 
 # @theyahia/yandex-webmaster-mcp
 
