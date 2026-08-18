@@ -1,3 +1,10 @@
+> Этот сервер входит в сборку **[theYahia/YaAll](https://github.com/theYahia/YaAll)** —
+> весь яндексовский слой в одном репозитории: десять MCP-серверов, скиллы Claude Code
+> под SEO и валидацию спроса, плюс материалы официальных серверов Яндекса.
+> Здесь он живёт отдельно, там — рядом с остальными: [`mcp/yandex-webmaster-mcp/`](https://github.com/theYahia/YaAll/tree/main/mcp/yandex-webmaster-mcp)
+>
+> *Part of [theYahia/YaAll](https://github.com/theYahia/YaAll) — the whole Yandex stack in one repo.*
+
 # @theyahia/yandex-webmaster-mcp
 
 MCP-сервер для API Яндекс.Вебмастер — сайты, индексация, поисковые запросы, sitemaps,
