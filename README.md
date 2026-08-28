@@ -1,3 +1,17 @@
+> ## 🗄 Репозиторий заархивирован
+>
+> Разработка переехала в **[theYahia/YaAll](https://github.com/theYahia/YaAll)** — сборку, где весь яндексовский слой лежит в одном месте: свои MCP-серверы, скиллы Claude Code и материалы официальных наборов Яндекса.
+>
+> Актуальная версия того, что лежало здесь: [`mcp/yandex-webmaster-mcp/`](https://github.com/theYahia/YaAll/tree/main/mcp/yandex-webmaster-mcp)
+>
+> Пакет в npm прежний — [`@theyahia/yandex-webmaster-mcp`](https://www.npmjs.com/package/@theyahia/yandex-webmaster-mcp), ставится и работает как раньше.
+> Здесь больше ничего не обновляется. Задачи и pull request'ы — в YaAll.
+
+> **Archived — development moved to [theYahia/YaAll](https://github.com/theYahia/YaAll),** a single repository bundling the whole Yandex stack.
+> The current version of this package now lives at [`mcp/yandex-webmaster-mcp/`](https://github.com/theYahia/YaAll/tree/main/mcp/yandex-webmaster-mcp).
+> The npm package [`@theyahia/yandex-webmaster-mcp`](https://www.npmjs.com/package/@theyahia/yandex-webmaster-mcp) is unchanged.
+> Please open issues and pull requests there.
+
 > Этот сервер входит в сборку **[theYahia/YaAll](https://github.com/theYahia/YaAll)** —
 > весь яндексовский слой в одном репозитории: десять MCP-серверов, скиллы Claude Code
 > под SEO и валидацию спроса, плюс материалы официальных серверов Яндекса.
